@@ -11,3 +11,4 @@ galaxy_info:
 
 dependencies:
   - shomatan.epel
+  - shomatan.firewalld
