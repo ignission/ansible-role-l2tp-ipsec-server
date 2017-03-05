@@ -63,8 +63,8 @@
 # sysctl
 - name: Copy sysctl parameter in place.
   template:
-    src: /etc/ppp/options.xl2tpd.j2
-    dest: /etc/ppp/options.xl2tpd
+    src: sysctl-params.conf.j2
+    dest: /etc/sysctl.d/60-vpn-server.conf
   notify:
     - update sysctl
 
