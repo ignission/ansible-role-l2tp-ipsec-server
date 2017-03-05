@@ -1,2 +1,11 @@
 ---
-# handlers file for l2tp-ipsec-server
+- name: restart vpn-server
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - ipsec
+    - xl2tpd
+
+- name: update sysctl
+  command: sysctl -p /etc/sysctl.d/60-vpn-server.conf

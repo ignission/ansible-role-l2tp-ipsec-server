@@ -1,2 +1,12 @@
 ---
-# defaults file for l2tp-ipsec-server
+# common
+l2tp_ipsec_server_host: vpn.example.com
+l2tp_ipsec_PSK: pre_shared_key
+l2tp_ipsec_mtu: 1410
+l2tp_ipsec_mru: 1410
+
+l2tp_ipsec_server_bind_interface: eth0
+l2tp_ipsec_server_local_ip: 192.168.1.1
+l2tp_ipsec_server_ip_range: 192.168.1.128-192.168.1.254
+l2tp_ipsec_server_dns: 8.8.8.8
+l2tp_ipsec_server_users: []
