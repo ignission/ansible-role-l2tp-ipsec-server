@@ -15,6 +15,9 @@ script:
   # Run container in detached state.
   - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ansible/${distro}-ansible:stable "${init}" > "${container_id}"'
 
+  # Install required Galaxy roles.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-galaxy install shomatan.epel shomatan.firewalld'
+
   # Ansible syntax check.
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
 
