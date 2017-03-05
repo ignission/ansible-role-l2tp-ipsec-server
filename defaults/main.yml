@@ -10,4 +10,5 @@ l2tp_ipsec_server_local_ip: 192.168.1.1
 l2tp_ipsec_server_ip_range: 192.168.1.128-192.168.1.254
 l2tp_ipsec_server_dns: 8.8.8.8
 l2tp_ipsec_server_users: []
+l2tp_ipsec_server_firewall_zone: public
 l2tp_ipsec_server_udp_ports: [ 1701,500,4500 ]

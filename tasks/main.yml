@@ -74,3 +74,19 @@
 
 - name: Ensure ipsec is started and enabled to start at boot.
   service: name=ipsec state=started enabled=yes
+
+# firewalld
+- name: firewall masquerade.
+  firewalld:
+    masquerade: yes
+    permanent: true
+    immediate: true
+    zone: "{{ l2tp_ipsec_server_firewall_zone }}"
+
+- name: firewall UDP ports.
+  firewalld:
+    port: "{{ item }}/udp"
+    permanent: true
+    immediate: true
+    zone: "{{ l2tp_ipsec_server_firewall_zone }}"
+  with_items: "{{ l2tp_ipsec_server_udp_ports }}"
