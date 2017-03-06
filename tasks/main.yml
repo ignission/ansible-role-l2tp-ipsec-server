@@ -81,6 +81,7 @@
     masquerade: yes
     permanent: true
     immediate: true
+    state: enabled
     zone: "{{ l2tp_ipsec_server_firewall_zone }}"
 
 - name: firewall UDP ports.
@@ -88,5 +89,6 @@
     port: "{{ item }}/udp"
     permanent: true
     immediate: true
+    state: enabled
     zone: "{{ l2tp_ipsec_server_firewall_zone }}"
   with_items: "{{ l2tp_ipsec_server_udp_ports }}"
