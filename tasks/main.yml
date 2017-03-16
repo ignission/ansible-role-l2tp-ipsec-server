@@ -71,9 +71,11 @@
 # service
 - name: Ensure xl2tpd is started and enabled to start at boot.
   service: name=xl2tpd state=started enabled=yes
+  when: ansible_connection != 'docker'
 
 - name: Ensure ipsec is started and enabled to start at boot.
   service: name=ipsec state=started enabled=yes
+  when: ansible_connection != 'docker'
 
 # firewalld
 - name: firewall masquerade.
@@ -83,6 +85,7 @@
     immediate: true
     state: enabled
     zone: "{{ l2tp_ipsec_server_firewall_zone }}"
+  when: ansible_connection != 'docker'
 
 - name: firewall UDP ports.
   firewalld:
@@ -92,3 +95,4 @@
     state: enabled
     zone: "{{ l2tp_ipsec_server_firewall_zone }}"
   with_items: "{{ l2tp_ipsec_server_udp_ports }}"
+  when: ansible_connection != 'docker'
