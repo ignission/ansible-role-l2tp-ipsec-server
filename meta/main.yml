@@ -11,4 +11,4 @@ galaxy_info:
 
 dependencies:
   - shomatan.epel
-  - { shomatan.firewalld, when: "ansible_connection != 'docker'" }
+  - { role: shomatan.firewalld, when: "ansible_connection != 'docker'" }
