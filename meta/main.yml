@@ -6,9 +6,10 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-        - all
+        - 7.2.1511
   galaxy_tags: []
 
 dependencies:
   - shomatan.epel
-  - { role: shomatan.firewalld, when: "ansible_connection != 'docker'" }
+  - src: shomatan.firewalld
+    when: "ansible_connection != 'docker'"
