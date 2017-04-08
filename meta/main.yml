@@ -1,7 +1,7 @@
 galaxy_info:
   author: Shoma Nishitateno
   description: Installs and configures L2TP/IPsec server
-  license: "license (BSD, MIT)"
+  license: "license MIT"
   min_ansible_version: 1.8
   platforms:
     - name: EL

@@ -36,11 +36,11 @@ Example Playbook
           l2tp_ipsec_server_ip_range: 10.0.0.11-10.0.0.29
           l2tp_ipsec_server_users:
             - { username: user1, password: password1, ipaddress: 10.0.0.10 }
-            
+
 License
 -------
 
-BSD, MIT
+MIT
 
 Author Information
 ------------------
