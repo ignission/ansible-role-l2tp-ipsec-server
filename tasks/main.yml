@@ -96,3 +96,8 @@
     zone: "{{ l2tp_ipsec_server_firewall_zone }}"
   with_items: "{{ l2tp_ipsec_server_udp_ports }}"
   when: ansible_connection != 'docker'
+
+# clean up
+- name: Purge yum cache.
+  command: yum clean all
+  when: ansible_connection == 'docker'
