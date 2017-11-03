@@ -4,13 +4,13 @@ ipcp-accept-local
 ipcp-accept-remote
 ms-dns  {{ l2tp_ipsec_server_dns }}
 auth
-crtscts
+#crtscts
 idle 1800
 mtu {{ l2tp_ipsec_mtu }}
 mru {{ l2tp_ipsec_mru }}
 nodefaultroute
 debug
-lock
+#lock
 proxyarp
 connect-delay 5000
 
