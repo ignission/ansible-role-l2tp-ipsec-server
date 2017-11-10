@@ -52,10 +52,10 @@
   notify:
     - restart vpn-server
 
-- name: Copy credential file in place.
+- name: Copy xl2tpd option file in place.
   template:
-    src: xl2tpd.conf.j2
-    dest: /etc/xl2tpd/xl2tpd.conf
+    src: options.xl2tpd.j2
+    dest: /etc/ppp/options.xl2tpd
     mode: 00600
   notify:
     - restart vpn-server
