@@ -11,5 +11,4 @@ galaxy_info:
 
 dependencies:
   - shomatan.repo-epel
-  - src: shomatan.firewalld
-    when: "ansible_connection != 'docker'"
+  - shomatan.firewalld
