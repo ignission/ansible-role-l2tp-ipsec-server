@@ -10,5 +10,7 @@ galaxy_info:
   galaxy_tags: []
 
 dependencies:
-  - shomatan.repo-epel
-  - shomatan.firewalld
+  - src: shomatan.repo-epel
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  - src: shomatan.firewalld
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
