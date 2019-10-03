@@ -77,17 +77,18 @@
     proto: udp
   with_items: "{{ l2tp_ipsec_server_udp_ports }}"
 
-# # firewalld
-# - name: firewall masquerade.
-#   firewalld:
-#     masquerade: yes
-#     permanent: true
-#     immediate: true
-#     state: enabled
-#     zone: "{{ l2tp_ipsec_server_firewall_zone }}"
-#   when: ansible_connection != 'docker'
+- name: firewall masquerade
+  blockinfile:
+    dest: /etc/ufw/before.rules
+    insertafter: '^COMMIT\n'
+    content: |
+      *nat
+      -A POSTROUTING -s 0.0.0.0/0 -o {{ l2tp_ipsec_server_bind_interface }} -j MASQUERADE
+      COMMIT
+  notify:
+    - restart ufw
 
-- name: Masquerade 
+- name: IP forwarding
   lineinfile:
     path: /etc/default/ufw
     regexp: '^DEFAULT_FORWARD_POLICY='

@@ -9,3 +9,8 @@
 
 - name: update sysctl
   command: sysctl -p /etc/sysctl.d/60-vpn-server.conf
+
+- name: restart ufw
+  service:
+    name: ufw
+    state: restarted
