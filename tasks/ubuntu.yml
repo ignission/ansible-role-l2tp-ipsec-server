@@ -1,19 +1,17 @@
 ---
 # install
 - name: Ensure l2tp-ipsec server packages are installed.
-  yum:
+  apt:
     name: "{{ item }}"
-    state: installed
-    enablerepo: epel
+    state: present
   with_items:
     - xl2tpd
-    - libreswan
-    - lsof
+    - strongswan
 
 # configure ipsec
 - name: Copy ipsec configuration in place.
   copy:
-    src: ipsec.centos.conf
+    src: ipsec.ubuntu.conf
     dest: /etc/ipsec.conf
     mode: 00600
   notify:
@@ -22,18 +20,18 @@
 - name: Copy pre-shared-key in place.
   template:
     src: default.secrets.j2
-    dest: /etc/ipsec.d/default.secrets
+    dest: /etc/ipsec.secrets
     mode: 00600
   notify:
     - restart vpn-server
 
-- name: Copy pre-shared-key in place.
-  template:
-    src: l2tp-ipsec.conf.j2
-    dest: /etc/ipsec.d/l2tp-ipsec.conf
-    mode: 00600
-  notify:
-    - restart vpn-server
+# - name: Copy pre-shared-key in place.
+#   template:
+#     src: l2tp-ipsec.conf.j2
+#     dest: /etc/ipsec.d/l2tp-ipsec.conf
+#     mode: 00600
+#   notify:
+#     - restart vpn-server
 
 - name: Copy credential file in place.
   template:
@@ -46,7 +44,7 @@
 # configure xltpd
 - name: Copy xl2tpd config file in place.
   template:
-    src: xl2tpd.conf.centos.j2
+    src: xl2tpd.conf.ubuntu.j2
     dest: /etc/xl2tpd/xl2tpd.conf
     mode: 00600
   notify:
@@ -75,24 +73,27 @@
 - name: Ensure ipsec is started and enabled to start at boot.
   service: name=ipsec state=started enabled=yes
 
-# firewalld
-- name: firewall masquerade.
-  firewalld:
-    masquerade: yes
-    permanent: true
-    immediate: true
-    state: enabled
-    zone: "{{ l2tp_ipsec_server_firewall_zone }}"
+# # firewalld
+# - name: firewall masquerade.
+#   firewalld:
+#     masquerade: yes
+#     permanent: true
+#     immediate: true
+#     state: enabled
+#     zone: "{{ l2tp_ipsec_server_firewall_zone }}"
+#   when: ansible_connection != 'docker'
 
-- name: firewall UDP ports.
-  firewalld:
-    port: "{{ item }}/udp"
-    permanent: true
-    immediate: true
-    state: enabled
-    zone: "{{ l2tp_ipsec_server_firewall_zone }}"
-  with_items: "{{ l2tp_ipsec_server_udp_ports }}"
+# - name: firewall UDP ports.
+#   firewalld:
+#     port: "{{ item }}/udp"
+#     permanent: true
+#     immediate: true
+#     state: enabled
+#     zone: "{{ l2tp_ipsec_server_firewall_zone }}"
+#   with_items: "{{ l2tp_ipsec_server_udp_ports }}"
+#   when: ansible_connection != 'docker'
 
-# clean up
-- name: Purge yum cache.
-  command: yum clean all
+# # clean up
+# - name: Purge yum cache.
+#   command: yum clean all
+#   when: ansible_connection == 'docker'
