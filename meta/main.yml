@@ -22,3 +22,5 @@ dependencies:
     when: ansible_os_family == 'RedHat'
   - src: shomatan.firewalld
     when: ansible_os_family == 'RedHat'
+  - src: shomatan.ufw
+    when: ansible_os_family == 'Debian'

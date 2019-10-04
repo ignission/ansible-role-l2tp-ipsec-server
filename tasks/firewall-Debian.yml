@@ -1,9 +1,5 @@
 ---
 # Firewall
-- name: Enable UFW
-  ufw:
-    state: enabled
-
 - name: Allow all access to udp port
   ufw:
     rule: allow
