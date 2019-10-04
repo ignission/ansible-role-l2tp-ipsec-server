@@ -7,10 +7,18 @@ galaxy_info:
     - name: EL
       versions:
         - 7
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - bionic
   galaxy_tags: []
 
 dependencies:
   - src: shomatan.repo-epel
-    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+    when: ansible_os_family == 'RedHat'
   - src: shomatan.firewalld
-    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+    when: ansible_os_family == 'RedHat'
