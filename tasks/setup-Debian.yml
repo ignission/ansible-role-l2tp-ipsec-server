@@ -1,0 +1,5 @@
+---
+- name: Ensure L2TP/IPSec is installed on RHEL.
+  apt:
+    name: "{{ l2tp_ipsec_server_packages }}"
+    state: installed

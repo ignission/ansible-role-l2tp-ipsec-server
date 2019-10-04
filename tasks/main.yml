@@ -1,6 +1,75 @@
 ---
-- import_tasks: centos.yml
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+# Include variables and define needed variables.
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
 
-- import_tasks: ubuntu.yml
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+# Setup/install tasks.
+- include_tasks: "setup-{{ ansible_os_family }}.yml"
+
+# Configure ipsec tasks.
+- name: Copy ipsec configuration in place.
+  copy:
+    src: ipsec.conf
+    dest: /etc/ipsec.conf
+    mode: 00600
+  notify:
+    - restart vpn-server
+
+- name: Copy pre-shared-key in place.
+  template:
+    src: default.secrets.j2
+    dest: /etc/ipsec.d/default.secrets
+    mode: 00600
+  notify:
+    - restart vpn-server
+
+- name: Copy l2tp-ipsec config
+  template:
+    src: l2tp-ipsec.conf.j2
+    dest: /etc/ipsec.d/l2tp-ipsec.conf
+    mode: 00600
+  notify:
+    - restart vpn-server
+
+- name: Copy credential file in place.
+  template:
+    src: chap-secrets.j2
+    dest: /etc/ppp/chap-secrets
+    mode: 00600
+  notify:
+    - restart vpn-server
+
+# Configure xltpd tasks.
+- name: Copy xl2tpd config file in place.
+  template:
+    src: xl2tpd.conf.j2
+    dest: /etc/xl2tpd/xl2tpd.conf
+    mode: 00600
+  notify:
+    - restart vpn-server
+
+- name: Copy xl2tpd option file in place.
+  template:
+    src: options.xl2tpd.j2
+    dest: /etc/ppp/options.xl2tpd
+    mode: 00600
+  notify:
+    - restart vpn-server
+
+# Setup sysctl tasks.
+- name: Copy sysctl parameter in place.
+  template:
+    src: sysctl-params.conf.j2
+    dest: /etc/sysctl.d/60-vpn-server.conf
+  notify:
+    - update sysctl
+
+# Configure service tasks.
+- name: Ensure xl2tpd is started and enabled to start at boot.
+  service: name=xl2tpd state=started enabled=yes
+
+- name: Ensure ipsec is started and enabled to start at boot.
+  service: name=ipsec state=started enabled=yes
+
+# Setup/install firewall tasks.
+- include_tasks: "firewall-{{ ansible_os_family }}.yml"

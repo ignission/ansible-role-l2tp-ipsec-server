@@ -1,0 +1,5 @@
+---
+l2tp_ipsec_server_packages:
+  - xl2tpd
+  - libreswan
+  - lsof
