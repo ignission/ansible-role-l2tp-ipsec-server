@@ -11,7 +11,7 @@
 # configure ipsec
 - name: Copy ipsec configuration in place.
   copy:
-    src: ipsec.ubuntu.conf
+    src: ipsec.conf
     dest: /etc/ipsec.conf
     mode: 00600
   notify:
@@ -20,7 +20,15 @@
 - name: Copy pre-shared-key in place.
   template:
     src: default.secrets.j2
-    dest: /etc/ipsec.secrets
+    dest: /etc/ipsec.d/default.secrets
+    mode: 00600
+  notify:
+    - restart vpn-server
+
+- name: Copy l2tp-ipsec config
+  template:
+    src: l2tp-ipsec.conf.j2
+    dest: /etc/ipsec.d/l2tp-ipsec.conf
     mode: 00600
   notify:
     - restart vpn-server

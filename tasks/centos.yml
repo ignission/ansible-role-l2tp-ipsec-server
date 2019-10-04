@@ -13,7 +13,7 @@
 # configure ipsec
 - name: Copy ipsec configuration in place.
   copy:
-    src: ipsec.centos.conf
+    src: ipsec.conf
     dest: /etc/ipsec.conf
     mode: 00600
   notify:
@@ -27,7 +27,7 @@
   notify:
     - restart vpn-server
 
-- name: Copy pre-shared-key in place.
+- name: Copy l2tp-ipsec config
   template:
     src: l2tp-ipsec.conf.j2
     dest: /etc/ipsec.d/l2tp-ipsec.conf
