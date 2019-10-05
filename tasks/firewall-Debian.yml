@@ -1,5 +1,9 @@
 ---
 # Firewall
+- name: Enable UFW
+  ufw:
+    state: enabled
+
 - name: Allow all access to udp port
   ufw:
     rule: allow
@@ -7,7 +11,7 @@
     proto: udp
   with_items: "{{ l2tp_ipsec_server_udp_ports }}"
 
-- name: firewall masquerade
+- name: Firewall masquerade
   blockinfile:
     dest: /etc/ufw/before.rules
     insertafter: '^COMMIT\n'

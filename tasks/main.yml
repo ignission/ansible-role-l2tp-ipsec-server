@@ -18,7 +18,7 @@
 - name: Copy pre-shared-key in place.
   template:
     src: default.secrets.j2
-    dest: /etc/ipsec.d/default.secrets
+    dest: "{{ l2tp_ipsec_server_preshared_key_file_path }}"
     mode: 00600
   notify:
     - restart vpn-server

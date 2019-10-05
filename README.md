@@ -1,4 +1,4 @@
-Role Name
+Ansible Role: l2tp-ipsec-server
 =========
 
 [![Build Status](https://travis-ci.org/shomatan/ansible-nginx.svg?branch=master)](https://travis-ci.org/shomatan/ansible-l2tp-ipsec-server)
@@ -13,13 +13,24 @@ None.
 Role Variables
 --------------
 
-None.
+    l2tp_ipsec_server_host: vpn.example.com
+    l2tp_ipsec_PSK: pre_shared_key
+    l2tp_ipsec_mtu: 1410
+    l2tp_ipsec_mru: 1410
+    l2tp_ipsec_server_bind_interface: eth0
+    l2tp_ipsec_server_local_ip: 192.168.1.1
+    l2tp_ipsec_server_ip_range: 192.168.1.128-192.168.1.254
+    l2tp_ipsec_server_dns: 8.8.8.8
+    l2tp_ipsec_server_users: []
+    l2tp_ipsec_server_firewall_zone: public
+    l2tp_ipsec_server_udp_ports: [ 1701,500,4500 ]
 
 Dependencies
 ------------
 
-- shomatan.epel
-- shomatan.firewalld
+- shomatan.epel (RHEL)
+- shomatan.firewalld (RHEL)
+- shomatan.ufw (Debian)
 
 Example Playbook
 ----------------
@@ -44,3 +55,5 @@ MIT
 
 Author Information
 ------------------
+
+Shoma Nishitateno
