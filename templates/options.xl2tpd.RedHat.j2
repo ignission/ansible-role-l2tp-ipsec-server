@@ -1,0 +1,23 @@
+# Managed by ansible
+
+ipcp-accept-local
+ipcp-accept-remote
+ms-dns  {{ l2tp_ipsec_server_dns }}
+auth
+#crtscts
+idle 1800
+mtu {{ l2tp_ipsec_mtu }}
+mru {{ l2tp_ipsec_mru }}
+nodefaultroute
+debug
+#lock
+proxyarp
+connect-delay 5000
+
+name xl2tpd
+refuse-pap
+refuse-chap
+refuse-mschap
+require-mschap-v2
+persist
+logfile /var/log/xl2tpd.log

@@ -1,0 +1,24 @@
+---
+- name: Copy ipsec configuration in place.
+  copy:
+    src: ipsec.{{ ansible_os_family }}.conf
+    dest: /etc/ipsec.conf
+    mode: 00600
+  notify:
+    - restart vpn-server
+
+- name: Copy pre-shared-key in place.
+  template:
+    src: default.secrets.j2
+    dest: /etc/ipsec.d/default.secrets
+    mode: 00600
+  notify:
+    - restart vpn-server
+
+- name: Copy l2tp-ipsec config
+  template:
+    src: l2tp-ipsec.RedHat.conf.j2
+    dest: /etc/ipsec.d/l2tp-ipsec.conf
+    mode: 00600
+  notify:
+    - restart vpn-server
